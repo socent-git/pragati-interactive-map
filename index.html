@@ -190,15 +190,16 @@ path.state{
 }
 path.state:hover{
   opacity:0.75;
-  stroke:var(--dark);
+  stroke:var(--red);
   stroke-width:1.1;
 }
 path.state.active{
-  stroke:var(--dark);
+  stroke:var(--red);
   stroke-width:1.4;
 }
 path.state.nodata{
-  fill:#e2e2e2;
+  fill:#ed7f7f;
+  fill-opacity:0.3;
 }
 
 .side-panel{
@@ -401,13 +402,12 @@ for (const code in stateOrgs){
   if (counts[code] > maxCount) maxCount = counts[code];
 }
 
-const redScale = ["#ed7f7f","#eb4c4c","#d42f2f","#c21f1f","#b21010","#a40707","#900000","#700000","#5b0000"];
+// red only, kept to the lighter end of the brand red palette: 1 org, 2 orgs, 3+ orgs
+const redScale = ["#ed7f7f","#eb4c4c","#d42f2f"];
 function colorFor(code){
   const c = counts[code];
   if (!c) return null; // no data
-  const ratio = c / maxCount;
-  const idx = Math.min(redScale.length - 1, Math.floor(ratio * (redScale.length - 1)));
-  return redScale[idx];
+  return redScale[Math.min(c, redScale.length) - 1];
 }
 
 // render paths
